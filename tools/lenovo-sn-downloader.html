@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenovo SN Downloader Utility</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body {
+            justify-content: center;
+        }
+
+        .tool-card {
+            background: var(--card-bg-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 36px 28px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+            margin-top: 40px;
+        }
+
+        .tool-card h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .tool-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .error {
+            color: #f87171;
+            font-size: 0.8125rem;
+            display: none;
+            margin-top: -4px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="app-nav">
+        <a href="../index.html">← Back to Hub</a>
+        <span class="nav-title">Lenovo Tools</span>
+    </nav>
+
+    <div class="container">
+        <div class="tool-card">
+            <span class="badge">Utility Tool</span>
+            <h1>Lenovo Bootloader Image Downloader</h1>
+            <p>Enter your device's <code>bootloader_sn</code> below to fetch your official <code>sn.img</code> file directly from the Lenovo CDN.</p>
+            
+            <form id="snForm" class="form-group" onsubmit="handleRedirect(event)">
+                <label for="snInput">Bootloader Serial Number</label>
+                <input 
+                    type="text" 
+                    id="snInput" 
+                    placeholder="e.g. abcd1234" 
+                    autocomplete="off" 
+                    required 
+                />
+                <span id="errorMsg" class="error">Please enter a valid serial number.</span>
+                
+                <button type="submit" class="btn-primary">Download sn.img</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleRedirect(event) {
+            event.preventDefault();
+            
+            const snInput = document.getElementById('snInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!snInput) {
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+            const targetUrl = `http://cdn.zui.lenovomm.com/developer/enhancedboot/${encodeURIComponent(snInput)}/sn.img`;
+            window.location.href = targetUrl;
+        }
+    </script>
+
+</body>
+</html>

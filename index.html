@@ -3,177 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phantom</title>
+    <title>Phantom — Hub & Projects</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            color: #444;
+        .profile-card {
+            background: var(--card-bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            margin-bottom: 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
-        body{
-            background-image: url("bg.jpg");
-            background-size: cover;
-            background-color: #0005;
 
-	    background-filter: darken;
-            background-position: center;
-            height: 100vh;
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+            margin-bottom: 16px;
         }
-        .center1{
-            position: absolute;
-            top: 55%;
-            left: 50%;
-            border: 2px #88888800 solid;
-            border-radius: 15px;
-            padding: 20px;
-            padding-bottom: 0;
-            transform: translate(-50%,-50%);
-            width: max-content;
-            background-color: rgba(255, 255, 255, 0.644);
-            backdrop-filter: blur(5px);
-            padding-top: 75px;
+
+        .profile-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
         }
-        .pfp-box{
-          
-            left: 50%;
-            transform: translate(-50%,-100%);
-            position: absolute;
+
+        .profile-handle {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 16px;
         }
-        .pfp{
-            width: 150px;
-            border-radius: 999px;
-            border: solid rgba(255, 255, 255, 0.644) 5px;
-			animation-name: border-anim;
-            animation-duration: 2s;
-            animation-iteration-count: infinite;
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
         }
-        .list-no{
-            list-style-type: none;
-            line-height: 1.5;
-        }
-        .hyper-no, a{
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             text-decoration: none;
-            color:rgb(18, 104, 190);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
-        .big-font{
-            font-size: 2rem;
-            color: #555;
-        }
-        .Phantom{
-            
-            animation-name: Phantom-anim;
-            animation-duration: 3s;
-            animation-iteration-count: infinite;
-        }
-        
-        
-    
-@keyframes Phantom-anim {
-  0% {
-    color: #F44336;
-  }
-  33% {
-    color: #00ACC1;
-  }
-  66% {
-    color: #3949AB;
-  }
-  100% {
-    color: #F44336;
-  }
-}
 
-@keyframes border-anim {
-  0% {
-    border-color: rgba(255, 255, 255, 0.3);
-   }  
-  50% {
-    border-color: rgba(255, 255, 255, 0.7);
-  }
-  100% {
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-}
+        .social-btn:hover {
+            border-color: var(--accent);
+            background: var(--card-hover);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
 
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 28px 0 14px 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .useless{
-        color: #999;
-    }
-    .inline{
-     display: flex;
-     width: math(100%+40px);
-        margin-left: -20px;
-        margin-right: -20px;
-    }
-    .emoji{
-        font-size: 1.5rem;
-    }
-    .inline .elem{
-        width: 50%;
-        text-align: center;
-        padding-top: 18px;
-        padding-bottom: 18px;
-    }
-    .centertext{
-        text-align: center;
-        display: block;
-    }
-    .line{
-        width: 100%;
-        height: 2px;
-        background-color: #8888;
-    }
-    .lino:hover{
-        
-        background-color: #ccc8;
-        width: math(100%+36px);
-        margin-left: -18px;
-        margin-right: -18px;
-        padding-left: 10px;
-    }
-    
-    .elem:hover{
-        background-color: #ddd8;
-    }
-    @media only screen and (max-width: 600px){
-        .center1{
-        	width: 80%;
-		padding-top: 60px;
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
-        body{
-            background-attachment: fixed;
-	    padding-top: 50px;
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
         }
-		
-        .pfp{
-            width: 120px;
-            border-radius: 999px;
-            border: solid rgba(255, 255, 255, 0.644) 3px;
+
+        .resource-card:hover {
+            background: var(--card-hover);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
         }
-    }
+
+        .resource-info h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .resource-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .resource-card:hover .arrow {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
     </style>
-    
 </head>
-<body><br/>
-    <div class="center1">
-        <div class="pfp-box"><img src="pfp.jpg" alt="" class="pfp"></div>
-        <span class="big-font">Hello, I am <span class="Phantom">PHANTOM</span> </span><span class="useless">(@PhantomEnigma)</span><br><br>
-        <ul class="list-no">
-            <li class="lino"><span class="emoji">&#128187</span> I am a student studying Engg.</li>
-            <li class="lino"><span class="emoji">&#128214</span> Knowledge ~ 0% </li>
-            <li class="lino"><span class="emoji">&#129302</span> Buildbot </li>
-            <li class="lino"><span class="emoji">&#129513</span> Skills - None </li>
-	<br>
-            <li>You have sucessfully wasted your valuable time on reading this.. <span class="emoji">&#128568</span></li>
-        </ul><br>
-        <div class="line"></div>
-	    
-        <div class="inline">
-            <a href="https://github.com/PhantomEnigma" class="elem" style="border-radius: 0 0 0 13px;">Github</a>
-            <a href="https://telegram.me/PhantomEnigma" class="elem" style="border-radius: 0 0 13px 0;">Telegram</a>
-        </diiv>
+<body>
+
+    <div class="container">
+
+        <!-- Profile Section -->
+        <header class="profile-card">
+            <video class="avatar" autoplay loop muted playsinline>
+                <source src="assets/pf.webm" type="video/webm">
+            </video>
+            <h1 class="profile-name">Phantom</h1>
+            <div class="profile-handle">@PhantomEnigma</div>
+            
+            <div class="social-links">
+                <a href="https://github.com/PhantomEnigma" target="_blank" rel="noopener" class="social-btn">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://telegram.me/PhantomEnigma" target="_blank" rel="noopener" class="social-btn">
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Device Guides -->
+        <div class="section-title">📱 Device Guides</div>
+        <div class="grid">
+            <a href="devices/moto-pad-60-neo/bootloader-unlock.html" class="resource-card">
+                <div class="resource-info">
+                    <h3>Moto Pad 60 Neo</h3>
+                    <p>Bootloader Unlock Guide (ZUI Firmware)</p>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <!-- Utilities & Tools -->
+        <div class="section-title">🛠️ Utilities &amp; Tools</div>
+        <div class="grid">
+            <a href="tools/lenovo-sn-downloader.html" class="resource-card">
+                <div class="resource-info">
+                    <h3>Lenovo SN Downloader</h3>
+                    <p>Fetch official sn.img bootloader unlock files directly from CDN</p>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <footer>
+            &copy; PhantomEnigma — All rights reserved.
+        </footer>
+
     </div>
+
 </body>
 </html>

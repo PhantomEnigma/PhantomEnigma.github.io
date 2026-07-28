@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootloader Unlock Guide — Moto Pad 60 Neo (ZUI)</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 28px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prereq-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .prereq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .step-number {
+            background: var(--accent);
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .step-card ol, .step-card ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        .step-card li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="app-nav">
+    <a href="../../index.html">← Back to Hub</a>
+    <span class="nav-title">Moto Pad 60 Neo</span>
+</nav>
+
+<div class="container">
+
+    <header class="page-header">
+        <span class="badge">ZUI Firmware</span>
+        <h1>Bootloader Unlock Guide<br><span style="color: var(--text-muted); font-size: 1.25rem;">Moto Pad 60 Neo</span></h1>
+    </header>
+
+    <!-- Warning Block -->
+    <div class="alert-box">
+        <h3>⚠️ Warning &amp; Disclaimer</h3>
+        <ul>
+            <li><strong>Data Loss:</strong> Unlocking the bootloader automatically performs a full factory reset. Back up your photos and important files standard.</li>
+            <li><strong>OTA Updates:</strong> Unlocking may permanently disable official over-the-air (OTA) updates.</li>
+            <li><strong>Warranty:</strong> Proceed entirely at your own risk.</li>
+        </ul>
+    </div>
+
+    <!-- Prerequisites -->
+    <h2 class="section-title">🧩 Prerequisites</h2>
+    <div class="prereq-list">
+        <div class="prereq-item">💻 PC / Laptop with ADB &amp; Fastboot drivers configured</div>
+        <div class="prereq-item">🔌 High-quality USB data cable</div>
+        <div class="prereq-item">👤 An active Lenovo Account</div>
+    </div>
+
+    <!-- Steps List -->
+    <h2 class="section-title">⚙️ Step-by-Step Instructions</h2>
+
+    <!-- Step 1 -->
+    <div class="card step-card">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <div class="step-title">Enable Developer Settings</div>
+        </div>
+        
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">
+            Configure your tablet software permissions before connecting to PC:
+        </p>
+
+        <ol class="guide-steps">
+            <li>
+                <strong>Unlock Developer Options:</strong>
+                Go to <code>Settings</code> → <code>About Tablet</code>, scroll to the bottom, and tap <strong>Build Number 7 times</strong> until a toast appears saying <em>"You are now a developer!"</em>.
+            </li>
+            <li>
+                <strong>Enable OEM Unlocking:</strong>
+                Navigate back to <code>Settings</code> → <code>System</code> → <code>Developer Options</code>, locate <strong>OEM Unlocking</strong>, and enable the toggle switch.
+            </li>
+            <li>
+                <strong>Enable USB Debugging:</strong>
+                In the same <code>Developer Options</code> menu, scroll down to <strong>USB Debugging</strong> and turn it <strong>ON</strong>. Confirm the pop-up prompt on your tablet screen.
+            </li>
+        </ol>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="card step-card">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <div class="step-title">Retrieve Tablet Identifiers</div>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">
+            Connect your tablet to your computer via USB cable. Open your command prompt or terminal and execute:
+        </p>
+
+        <p style="font-size: 0.875rem; color: #e2e8f0; margin-bottom: 6px; font-weight: 500;">1. Retrieve Device Serial Number (SN)</p>
+        <div class="code-wrapper" style="margin-bottom: 16px;">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre>adb shell getprop ro.serialno</pre>
+        </div>
+
+        <p style="font-size: 0.875rem; color: #e2e8f0; margin-bottom: 6px; font-weight: 500;">2. Retrieve Bootloader Serial Number (bootload_sn)</p>
+        <div class="code-wrapper" style="margin-bottom: 16px;">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre>adb shell getprop ro.boot.bootload_sn</pre>
+        </div>
+
+        <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; padding: 10px 14px; border-radius: 4px; font-size: 0.85rem; color: #cbd5e1; margin-top: 8px;">
+            <strong>Save these values:</strong> Copy both text strings returned by the terminal and paste them into a text document. You will need them for Step 3.
+        </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="card step-card">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <div class="step-title">Request &amp; Download Unlock File</div>
+        </div>
+
+        <ol class="guide-steps">
+            <li>
+                <strong>Apply on ZUI Portal:</strong>
+                Visit the official <a href="https://www.zui.com/iunlock" target="_blank" rel="noopener">Lenovo ZUI Unlock Portal</a> and log in with your Lenovo account.
+            </li>
+            <li>
+                <strong>Submit Device Information:</strong>
+                Select the category containing <strong>y900 11&amp;13</strong>. Input your <strong>SN</strong>, <strong>bootload_sn</strong>, and your email address, then solve the captcha and submit.
+            </li>
+            <li>
+                <strong>Download Image File:</strong>
+                After ~10 minutes, open our <a href="../../tools/lenovo-sn-downloader.html">Lenovo SN Downloader Tool</a>, enter your <code>bootload_sn</code>, and download your <code>sn.img</code> unlock file.
+            </li>
+        </ol>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="card step-card">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <div class="step-title">Flash Unlock File &amp; Finish</div>
+        </div>
+
+        <ol class="guide-steps">
+            <li>
+                <strong>Reboot to Bootloader:</strong>
+                Run the following command or reboot manually holding <strong>Volume Up + Power</strong>:
+                <div class="code-wrapper" style="margin-top: 8px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>adb reboot bootloader</pre>
+                </div>
+            </li>
+            <li>
+                <strong>Flash Unlock File:</strong>
+                Open terminal in the folder where <code>sn.img</code> is stored and execute:
+                <div class="code-wrapper" style="margin-top: 8px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>fastboot flash unlock sn.img</pre>
+                </div>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin: 8px 0 4px 0;">Then execute:</p>
+                <div class="code-wrapper" style="margin-top: 4px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>fastboot oem unlock</pre>
+                </div>
+                <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; padding: 10px 14px; border-radius: 4px; font-size: 0.85rem; color: #cbd5e1; margin: 10px 0;">
+                    ⚠️ <strong>Confirm on Device:</strong> Immediately press the <strong>Volume Up</strong> button on your tablet when the prompt appears on screen.
+                </div>
+            </li>
+            <li>
+                <strong>Verify Unlock Status:</strong>
+                Check that bootloader unlocking succeeded (should return <code>unlocked: Yes</code>):
+                <div class="code-wrapper" style="margin-top: 8px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>fastboot getvar unlocked</pre>
+                </div>
+            </li>
+            <li>
+                <strong>Wipe Device &amp; Reboot:</strong>
+                Perform a factory reset:
+                <div class="code-wrapper" style="margin-top: 8px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>fastboot -w</pre>
+                </div>
+                <p style="font-size: 0.85rem; color: #94a3b8; margin: 8px 0 4px 0;">Reboot into system:</p>
+                <div class="code-wrapper" style="margin-top: 4px;">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>fastboot reboot</pre>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <footer>
+        🎉 Your bootloader is now successfully unlocked!
+    </footer>
+
+</div>
+
+<script>
+    function copyCode(button) {
+        const pre = button.nextElementSibling;
+        navigator.clipboard.writeText(pre.innerText).then(() => {
+            button.innerText = 'Copied!';
+            setTimeout(() => {
+                button.innerText = 'Copy';
+            }, 2000);
+        });
+    }
+</script>
+
+</body>
+</html>
