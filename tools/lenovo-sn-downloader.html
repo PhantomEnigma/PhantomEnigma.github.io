@@ -55,7 +55,7 @@
             <h1>Lenovo Bootloader Image Downloader</h1>
             <p>Enter your device's <code>bootloader_sn</code> below to fetch your official <code>sn.img</code> file directly from the Lenovo CDN.</p>
             
-            <form id="snForm" class="form-group" onsubmit="handleRedirect(event)">
+            <form id="snForm" class="form-group" onsubmit="handleDownload(event)">
                 <label for="snInput">Bootloader Serial Number</label>
                 <input 
                     type="text" 
@@ -66,17 +66,29 @@
                 />
                 <span id="errorMsg" class="error">Please enter a valid serial number.</span>
                 
-                <button type="submit" class="btn-primary">Download sn.img</button>
+                <button type="submit" class="btn-primary">Generate Download Link</button>
             </form>
 
-            <p style="margin-top: 16px; margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
-                💡 <em>Chromium user? If downloading doesn't start automatically, right-click the button or allow insecure downloads for this domain.</em>
-            </p>
+            <div id="downloadContainer" style="margin-top: 20px; display: none; text-align: center;">
+                <a 
+                    id="downloadBtn" 
+                    href="#" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="btn-primary" 
+                    style="background: #22c55e; text-decoration: none; display: block;"
+                >
+                    ⬇️ Click Here to Download sn.img
+                </a>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
+                    💡 <em>If Chrome blocks the download: Right-click the green button and select <strong>"Save link as..."</strong></em>
+                </p>
+            </div>
         </div>
     </div>
 
     <script>
-        function handleRedirect(event) {
+        function handleDownload(event) {
             event.preventDefault();
             
             const snInput = document.getElementById('snInput').value.trim();
@@ -89,6 +101,14 @@
 
             errorMsg.style.display = 'none';
             const targetUrl = `http://cdn.zui.lenovomm.com/developer/enhancedboot/${encodeURIComponent(snInput)}/sn.img`;
+            
+            const container = document.getElementById('downloadContainer');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            downloadBtn.href = targetUrl;
+            container.style.display = 'block';
+
+            // Attempt direct download window open
             window.open(targetUrl, '_blank');
         }
     </script>
