@@ -68,6 +68,10 @@
                 
                 <button type="submit" class="btn-primary">Download sn.img</button>
             </form>
+
+            <p style="margin-top: 16px; margin-bottom: 0; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+                💡 <em>Chromium user? If downloading doesn't start automatically, right-click the button or allow insecure downloads for this domain.</em>
+            </p>
         </div>
     </div>
 
@@ -85,7 +89,7 @@
 
             errorMsg.style.display = 'none';
             const targetUrl = `http://cdn.zui.lenovomm.com/developer/enhancedboot/${encodeURIComponent(snInput)}/sn.img`;
-            window.location.href = targetUrl;
+            window.open(targetUrl, '_blank');
         }
     </script>
 
