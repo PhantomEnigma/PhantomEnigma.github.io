@@ -55,7 +55,7 @@
             <h1>Lenovo Bootloader Image Downloader</h1>
             <p>Enter your device's <code>bootloader_sn</code> below to fetch your official <code>sn.img</code> file directly from the Lenovo CDN.</p>
             
-            <form id="snForm" class="form-group" onsubmit="handleDownload(event)">
+            <form id="snForm" class="form-group" onsubmit="handleGenerate(event)">
                 <label for="snInput">Bootloader Serial Number</label>
                 <input 
                     type="text" 
@@ -66,29 +66,28 @@
                 />
                 <span id="errorMsg" class="error">Please enter a valid serial number.</span>
                 
-                <button type="submit" class="btn-primary">Generate Download Link</button>
+                <button type="submit" class="btn-primary">Generate URL</button>
             </form>
 
-            <div id="downloadContainer" style="margin-top: 20px; display: none; text-align: center;">
-                <a 
-                    id="downloadBtn" 
-                    href="#" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="btn-primary" 
-                    style="background: #22c55e; text-decoration: none; display: block;"
-                >
-                    ⬇️ Click Here to Download sn.img
-                </a>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
-                    💡 <em>If Chrome blocks the download: Right-click the green button and select <strong>"Save link as..."</strong></em>
+            <div id="urlContainer" style="margin-top: 20px; display: none;">
+                <label style="font-size: 0.875rem; color: var(--text-muted); display: block; margin-bottom: 6px;">
+                    Direct Download URL
+                </label>
+                <div class="code-wrapper" style="margin: 0;">
+                    <button class="copy-btn" id="copyUrlBtn" onclick="copyGeneratedUrl()">Copy</button>
+                    <pre id="urlDisplay" style="white-space: pre-wrap; word-break: break-all; margin: 0; color: #38bdf8;"></pre>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; text-align: center;">
+                    💡 Copy this URL and paste it directly into a new browser tab to download <code>sn.img</code>.
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        function handleDownload(event) {
+        let generatedUrl = '';
+
+        function handleGenerate(event) {
             event.preventDefault();
             
             const snInput = document.getElementById('snInput').value.trim();
@@ -100,16 +99,22 @@
             }
 
             errorMsg.style.display = 'none';
-            const targetUrl = `http://cdn.zui.lenovomm.com/developer/enhancedboot/${encodeURIComponent(snInput)}/sn.img`;
+            generatedUrl = `http://cdn.zui.lenovomm.com/developer/enhancedboot/${encodeURIComponent(snInput)}/sn.img`;
             
-            const container = document.getElementById('downloadContainer');
-            const downloadBtn = document.getElementById('downloadBtn');
-            
-            downloadBtn.href = targetUrl;
-            container.style.display = 'block';
+            document.getElementById('urlDisplay').textContent = generatedUrl;
+            document.getElementById('urlContainer').style.display = 'block';
+        }
 
-            // Attempt direct download window open
-            window.open(targetUrl, '_blank');
+        function copyGeneratedUrl() {
+            if (!generatedUrl) return;
+            
+            navigator.clipboard.writeText(generatedUrl).then(() => {
+                const btn = document.getElementById('copyUrlBtn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                }, 2000);
+            });
         }
     </script>
 
